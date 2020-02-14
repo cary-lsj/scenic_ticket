@@ -1,5 +1,6 @@
-<%@page import="java.sql.ResultSet"%>
-<%@page import="javabean.db_conn"%>
+<%@page import="java.util.List"%>
+<%@page import="vo.ScenicVO"%>
+<%@page import="model.ScenicModel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -61,41 +62,31 @@
 									<tbody>
 
 										<%
-											db_conn conn = new db_conn();
-											String sql = "select * from scenic";
-											ResultSet res = conn.executeQuery(sql);
-											while (res.next()) {
-												String scenic_id = res.getString(1);//id
-												String scenic_name = res.getString(2);//景区名字
-												String open_time = res.getString(3);//开放时间
-												String adults_price = res.getString(4);//成人票价格
-												String children_price = res.getString(5);//儿童票价格
-												String scenic_describe = res.getString(6);//描述
-												String scenic_position = res.getString(7);//景区位置
-												String row = null;
+											ScenicModel model = new ScenicModel();
+											List<ScenicVO> list = model.getAllScenic();
 
-												if (res.getRow() % 2 == 0) {
+											for (int i = 0; i < list.size(); i++) {
+												ScenicVO vo = (ScenicVO) list.get(i);
+												String row = null;
+												if (i % 2 == 0) {
 													row = "even";
 												} else {
 													row = "odd";
 												}
 										%>
 										<tr role="row" class="<%=row%>">
-											<td class="sorting_1"><%=scenic_name%></td>
-											<td><%=open_time%></td>
-											<td><%=adults_price%></td>
-											<td><%=children_price%></td>
-											<td><%=scenic_describe%></td>
-											<td><%=scenic_position%></td>
+											<td class="sorting_1"><%=vo.scenic_name%></td>
+											<td><%=vo.open_time%></td>
+											<td><%=vo.price_adults%></td>
+											<td><%=vo.price_children%></td>
+											<td><%=vo.scenic_describe%></td>
+											<td><%=vo.scenic_position%></td>
 											<td><a style="text-decoration: none;"
-												href="../del_message?id=<%=scenic_id%>&class=scenic">
-													删除 </a></td>
+												href="../del_message?id=<%=vo.id%>&class=scenic"> 删除 </a></td>
 										</tr>
 										<%
 											}
 										%>
-
-
 									</tbody>
 								</table>
 							</div>

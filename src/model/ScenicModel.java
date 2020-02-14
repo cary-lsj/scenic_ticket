@@ -1,71 +1,84 @@
 package model;
 
-import javabean.db_conn;
-import vo.ScenicVO;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import vo.ScenicVO;
+
+/*
+ * ScenicModel类
+ * 对Scenic表操作的封装
+ * */
 public class ScenicModel extends ModelBase {
 
+	/**
+	 * 获得景区所有数据
+	 */
 	public List<ScenicVO> getAllScenic() {
-		String sql = "select * from scenic_order";
+		// 组织sql语句 查询scenic景区表
+		String sql = "select * from scenic";
+		// 执行sql语句
 		ResultSet res = conn.executeQuery(sql);
 
+		// 实例化list景区列表 来存储ScenicVO景区数据包
 		List<ScenicVO> list = new ArrayList<ScenicVO>();
 		try {
+			// 读取下一条数据 直到读取到最后一条
 			while (res.next()) {
+				// 构造ScenicVO景区数据包
 				ScenicVO vo = new ScenicVO();
-
-				vo.id = res.getString(1);// id
-				vo.scenic_name = res.getString(2);// 景区名字
-				vo.open_time = res.getString(3);// 开放时间
-				vo.price_adults = res.getString(4);// 成人票价格
-				vo.price_children = res.getString(5);// 儿童票价格
-				vo.scenic_describe = res.getString(6);// 描述
-				vo.scenic_position = res.getString(7);// 景区位置
+				// 将res数据添加到ScenicVO景区数据包中
+				vo.update(res);
+				// 将数据包添加到list景区列表中
 				list.add(vo);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		// 返回list景区列表
 		return list;
 	}
 
-	public ScenicVO getScenic(String user_id) {
-		String sql = "select * from scenic_order where user_id='" + user_id + "'";
+	/**
+	 * 根据景区id获得景区数据
+	 */
+	public ScenicVO getScenic(String id) {
+		// 组织sql语句 查询scenic景区表中 id为指定id的一条数据
+		String sql = "select * from scenic where id='" + id + "'";
+		// 执行sql语句
 		ResultSet res = conn.executeQuery(sql);
 		try {
 			if (res.next()) {
+				// 构造ScenicVO景区数据包
 				ScenicVO vo = new ScenicVO();
-
-				vo.id = res.getString(1);// id
-				vo.scenic_name = res.getString(2);// 景区名字
-				vo.open_time = res.getString(3);// 开放时间
-				vo.price_adults = res.getString(4);// 成人票价格
-				vo.price_children = res.getString(5);// 儿童票价格
-				vo.scenic_describe = res.getString(6);// 描述
-				vo.scenic_position = res.getString(7);// 景区位置
+				// 将res数据添加到ScenicVO景区数据包中
+				vo.update(res);
+				// 返回ScenicVO景区数据包
 				return vo;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		// 失败时返回null空数据
 		return null;
 	}
 
+	/**
+	 * 向scenic表中添加景区
+	 */
 	public int addScenic(ScenicVO vo) {
 
 		// 构造sql语句 执行插入数据命令
-		String sql = "insert into scenic (scenic_name,open_time,price_adults,price_children,scenic_describe,position) values('"
+		String sql = "insert into scenic (scenic_name,open_time,price_adults,price_children,scenic_describe,scenic_position) values('"
 				+ vo.scenic_name + "','" + vo.open_time + "'," + vo.price_adults + "," + vo.price_children + ",'" + vo.scenic_describe
 				+ "','" + vo.scenic_position + "')";
-		// 执行sql语句
-		return conn.executeInsert(sql);
-
+		// 执行sql语句 用num接收返回值 插入数据的数量
+		int num = conn.executeInsert(sql);
+		// 返回num插入数据的数量
+		return num;
 	}
 }

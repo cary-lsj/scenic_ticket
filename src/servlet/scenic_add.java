@@ -1,46 +1,41 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javabean.db_conn;
+import model.ScenicModel;
+import vo.ScenicVO;
 
 public class scenic_add extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// 开景区名称始获取各种参数
+		// 设置编码格式为utf-8
 		req.setCharacterEncoding("utf-8");
+		// 实例化 ScenicVO
+		ScenicVO vo = new ScenicVO();
 		// 景区名称
-		String scenic_name = req.getParameter("scenic_name");
+		vo.scenic_name = req.getParameter("scenic_name");
 		// 开放时间
-		String open_time = req.getParameter("open_time");
+		vo.open_time = req.getParameter("open_time");
 		// 成人票价格
-		String adults_price_str = req.getParameter("adults_price");
-		Integer adults_price = Integer.parseInt(adults_price_str);
+		vo.price_adults = req.getParameter("adults_price");
 		// 儿童票价格
-		String children_price_str = req.getParameter("children_price");
-		Integer children_price = Integer.parseInt(children_price_str);
+		vo.price_children = req.getParameter("children_price");
 		// 景区描述
-		String scenic_describe = req.getParameter("scenic_describe");
+		vo.scenic_describe = req.getParameter("scenic_describe");
 		// 景区位置
-		String scenic_position = req.getParameter("scenic_position");
-		// 参数获取结束
+		vo.scenic_position = req.getParameter("scenic_position");
 
-		// 创建数据库连接
-		db_conn conn = new db_conn();
-//构造sql语句  执行插入数据命令
-		String sql = "insert into scenic (scenic_name,open_time,price,price_children,scenic_describe,position) values('"
-				+ scenic_name + "','" + open_time + "'," + adults_price + "," + children_price + ",'" + scenic_describe
-				+ "','" + scenic_position + "')";
-		// 执行sql语句
-		conn.executeInsert(sql);
+		// 实例化 ScenicModel
+		ScenicModel model = new ScenicModel();
+		// 向scenic表中添加景区
+		model.addScenic(vo);
 		//跳转到景区列表界面
 		resp.sendRedirect("admin/scenic_list.jsp");
 

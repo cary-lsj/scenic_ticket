@@ -1,5 +1,6 @@
-<%@page import="javabean.db_conn"%>
-<%@page import="java.sql.ResultSet"%>
+<%@page import="vo.ScenicVO"%>
+<%@page import="java.util.List"%>
+<%@page import="model.ScenicModel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -21,9 +22,9 @@
 <script src="js/bootstrap.min.js"></script>
 </head>
 <body class="bg-body">
-	
+
 	<%@ include file="header.jsp"%>
-	
+
 	<!-- 搜索 -->
 	<div class="index-wall white " style="">
 		<div class="container"
@@ -45,28 +46,24 @@
 		<div class="hangbanlist">
 			<div>
 				<%
-					db_conn conn = new db_conn();
-					String sql = "select * from scenic";
-					ResultSet res = conn.executeQuery(sql);
-					while (res.next()) {
-						String scenic_id = res.getString(1);//id
-						String scenic_name = res.getString(2);//景区名字
-						String open_time = res.getString(3);//开放时间
-						String adults_price = res.getString(4);//成人票价格
-						String children_price = res.getString(5);//儿童票价格
-						String scenic_describe = res.getString(6);//描述
-						String scenic_position = res.getString(7);//景区位置
+					ScenicModel model = new ScenicModel();
+					List<ScenicVO> list = model.getAllScenic();
+
+					for (int i = 0; i < list.size(); i++) {
+						ScenicVO vo = (ScenicVO) list.get(i);
 				%>
 
 				<!-- 表头 -->
 				<ul class="list-inline bor-bottom-solid-1  ">
-					<li class="w-percentage-25"><strong class="time"><%=scenic_name%></strong></li>
-					<li class="text-right">开放时间：<%=open_time%></li>
+					<li class="w-percentage-25"><strong class="time"><%=vo.scenic_name%></strong></li>
+					<li class="text-right">开放时间：<%=vo.open_time%></li>
 
 				</ul>
 
-				<span class="mar-left-20">景点地址：</span><span><%=scenic_position%></span>
-				<h5 class="mar-left-10">“<%=scenic_describe%>”</h5>
+				<span class="mar-left-20">景点地址：</span><span><%=vo.scenic_position%></span>
+				<h5 class="mar-left-10">
+					“<%=vo.scenic_describe%>”
+				</h5>
 
 				<!-- 表头结束 -->
 				<!-- 表BODY -->
@@ -76,20 +73,20 @@
 							<li class="w-percentage-20"><strong class="blue-0093dd">成人票</strong></li>
 							<li class="w-percentage-25">已售：50</li>
 							<li class="w-percentage-20 ">价格：<strong
-								class="rmb orange-f60 font16">￥<%=adults_price%></strong></li>
+								class="rmb orange-f60 font16">￥<%=vo.price_adults%></strong></li>
 							<li class="pull-right "><button type="button"
 									class="btn btn-danger btn-sm"
-									onClick="window.location.href ='order.jsp?scenic_id=<%=scenic_id%>&type=m';">预订</button>
+									onClick="window.location.href ='order.jsp?scenic_id=<%=vo.id%>&type=m';">预订</button>
 							</li>
 						</ul>
 						<ul class="list-inline">
 							<li class="w-percentage-20"><strong class=" red">儿童票</strong></li>
 							<li class="w-percentage-25">已售：20</li>
 							<li class="w-percentage-20 ">价格：<strong
-								class="rmb orange-f60 font16">￥<%=children_price%></strong></li>
+								class="rmb orange-f60 font16">￥<%=vo.price_children%></strong></li>
 							<li class="pull-right ">
 								<button type="button" class="btn btn-danger btn-sm"
-									onClick="window.location.href ='ticket_order.jsp?scenic_id=<%=scenic_id%>&type=c';">预订</button>
+									onClick="window.location.href ='order.jsp?scenic_id=<%=vo.id%>&type=c';">预订</button>
 							</li>
 						</ul>
 
