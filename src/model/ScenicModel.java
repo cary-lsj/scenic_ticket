@@ -81,4 +81,18 @@ public class ScenicModel extends ModelBase {
 		// 返回num插入数据的数量
 		return num;
 	}
+
+	/**
+	 * 删除scenic表中景区
+	 */
+	public int delScenic(String id) {
+
+		// 构造sql语句 删除目标数据
+		String sql = "delete from scenic where id='" + id + "'";
+
+		// 执行sql语句 用num接收返回值 删除数据的数量
+		int num = conn.executeDelete(sql);
+		// 返回num删除数据的数量
+		return num;
+	}
 }

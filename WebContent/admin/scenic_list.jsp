@@ -86,6 +86,8 @@
 										</tr>
 										<%
 											}
+											// 销毁ScenicModel对象
+											model.destroy();
 										%>
 									</tbody>
 								</table>

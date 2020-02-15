@@ -1,4 +1,9 @@
 
+<%@page import="model.ScenicModel"%>
+<%@page import="model.TicketOrderModel"%>
+<%@page import="java.util.List"%>
+<%@page import="vo.TicketOrderVO"%>
+<%@page import="vo.ScenicVO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="javabean.db_conn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -39,46 +44,46 @@
 							<div class="col-sm-12">
 								<table class="table table-striped table-bordered dataTable no-footer" width="100%" cellspacing="0"  style="width: 100%;">
 									<thead>
-										<tr role="row">
-											<th class="sorting_asc"style="width:15%;">用户名</th>
-											<th class="sorting" style="width:10%;">航班号</th>
-											<th class="sorting"  style="width:10%;">乘机人</th>
-											<th class="sorting" style="width:15%;">乘机日期</th>
-											<th class="sorting" style="width:10%;">舱位</th>
-											<th class="sorting"  style="width:15%;">证件号码</th>
-											<th class="sorting"  style="width:10%;">联系人</th>
-											<th class="sorting"  style="width:15%;">联系电话</th>
-											
-										</tr>
-									</thead>
-									
-									<tbody>
-										<%
-											db_conn conn=new db_conn();
-											String sql="select * from t_order";
-											ResultSet res=conn.executeQuery(sql);
-											String row=null;
-											while(res.next()){
-												if(res.getRow()%2==0){
-													row="even";
-												}else{
-													row="odd";
-												}
-										%>
-									
-										<tr role="row" class="<%=row %>">
-											<td class="sorting_1"><%=res.getString(2) %></td>
-											<td><%=res.getString(3) %></td>
-											<td><%=res.getString(4) %></td>
-											<td><%=res.getString(5) %></td>
-											<td><%=res.getString(6) %></td>
-											<td><%=res.getString(7) %></td>
-											<td><%=res.getString(8) %></td>
-											<td><%=res.getString(9) %></td>
-										</tr>
-										<%
-											}
-										%>
+										<tr>
+				<th style="width: 10%;">联系人</th>
+				<th style="width: 10%;">联系电话</th>
+				<th style="width: 10%;">联系人身份证</th>
+				<th style="width: 10%;">入场时间</th>
+				<th style="width: 10%;">成人票数量</th>
+				<th style="width: 10%;">儿童票数量</th>
+				<th style="width: 10%;">景区名称</th>
+				<th style="width: 10%;">景区位置</th>
+				<th style="width: 10%;">景区开放时间</th>
+
+			</tr>
+
+			<%
+				TicketOrderModel model = new TicketOrderModel();
+				ScenicModel scenicModel = new ScenicModel();
+				List<TicketOrderVO> list = model.getAllTicketOrder();
+				for (TicketOrderVO vo : list) {
+
+					ScenicVO scenicVo = scenicModel.getScenic(vo.scenic_id);
+			%>
+
+			<tr>
+				<td><%=vo.user_name%></td>
+				<td><%=vo.phone%></td>
+				<td><%=vo.user_id_card%></td>
+				<td><%=vo.enter_time%></td>
+				<td><%=vo.adults_num%></td>
+				<td><%=vo.children_num%></td>
+				<td><%=scenicVo.scenic_name%></td>
+				<td><%=scenicVo.scenic_position%></td>
+				<td><%=scenicVo.open_time%></td>
+
+			</tr>
+
+			<%
+				}
+				model.destroy();
+				scenicModel.destroy();
+			%>
 										
 									</tbody>
 								</table>

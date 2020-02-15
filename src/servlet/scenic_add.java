@@ -36,6 +36,8 @@ public class scenic_add extends HttpServlet {
 		ScenicModel model = new ScenicModel();
 		// 向scenic表中添加景区
 		model.addScenic(vo);
+		// 销毁ScenicModel对象
+		model.destroy();
 		//跳转到景区列表界面
 		resp.sendRedirect("admin/scenic_list.jsp");
 

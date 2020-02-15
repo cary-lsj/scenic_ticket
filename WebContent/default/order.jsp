@@ -90,7 +90,7 @@
 				</div>
 
 				<div class="mar-top-10">
-					成人票/人： <input name="ticket_num" type="number"
+					成人票/人： <input name="adults_num" type="number"
 						class="form-control input-sm"
 						style="display: inline-block; width: 150px;" placeholder="0">
 					儿童票/人： <input name="children_num" type="number"

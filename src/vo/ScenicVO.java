@@ -11,7 +11,7 @@ public class ScenicVO extends VOBase {
 	/**
 	 * Scenic id
 	 */
-	public String id;
+	public int id;
 	/**
 	 * 景区名字
 	 */
@@ -45,7 +45,7 @@ public class ScenicVO extends VOBase {
 	public void update(ResultSet res) {
 		try {
 			// 根据表中数据依次读取数据
-			id = res.getString(1);
+			id = res.getInt(1);
 			scenic_name = res.getString(2);
 			open_time = res.getString(3);
 			price_adults = res.getString(4);

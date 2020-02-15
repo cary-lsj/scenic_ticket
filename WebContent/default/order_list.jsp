@@ -1,13 +1,19 @@
 
+<%@page import="vo.ScenicVO"%>
+<%@page import="model.ScenicModel"%>
+<%@page import="java.util.List"%>
+<%@page import="vo.TicketOrderVO"%>
+<%@page import="model.TicketOrderModel"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="javabean.db_conn"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <%
 	//添加URL session ，作为用户登录后跳转回来的依据,登录servlet中已经写了判断程序，如果有url_cookie，就跳转到url_cookie，如果没有，就跳转到用户中心
 	session.setAttribute("url", request.getRequestURI());
 %>
-<%@ include file="verify_login.jsp" %>
+<%@ include file="verify_login.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,26 +45,26 @@
 				</div>
 				<ul class="nav navbar-nav nav-top-small" style="margin-left: -15px;">
 					<li class="dropdown">
-						<% if(session.getAttribute("user_id")!=null){ %>
-							<a href="javacript:none" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-								您好，<%=session.getAttribute("user_id").toString() %>
-								<span class="caret"></span>
-							</a>
-							<ul class="dropdown-menu">
-								<li><a href="logout.jsp">退出</a></li>
-							</ul>
-						<%}else{ %>
-							<a href="../user_center" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
-								请登录！
-								
-							</a>
-						<%} %>
+						<%
+							if (session.getAttribute("user_id") != null) {
+						%> <a href="javacript:none" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false"> 您好，<%=session.getAttribute("user_id").toString()%>
+							<span class="caret"></span>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a href="logout.jsp">退出</a></li>
+						</ul> <%
+ 	} else {
+ %> <a href="../user_center" class="dropdown-toggle" role="button"
+						aria-haspopup="true" aria-expanded="false"> 请登录！ </a> <%
+ 	}
+ %>
 					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right nav-top-small">
-					<li class="dropdown">
-						<a href="message_board.jsp" class="dropdown-toggle"> 留言板 </a>
-					</li>
+					<li class="dropdown"><a href="message_board.jsp"
+						class="dropdown-toggle"> 留言板 </a></li>
 
 				</ul>
 
@@ -103,47 +109,44 @@
 		<table border="0" cellspacing="0" cellpadding="0"
 			class="table table-hover table-striped font12 table-bordered v-align-top">
 			<tr>
-				<th style="width:10%;">航班号</th>
-				<th style="width:15%;">乘机人</th>
-				<th style="width:18%;">乘机日期</th>
-				<th style="width:10%;">舱位</th>
-				<th style="width:17%;">乘客证件</th>
-				<th style="width:15%;">联系人</th>
-				<th style="width:15%;">联系电话</th>
+				<th style="width: 10%;">联系人</th>
+				<th style="width: 10%;">联系电话</th>
+				<th style="width: 10%;">联系人身份证</th>
+				<th style="width: 10%;">入场时间</th>
+				<th style="width: 10%;">成人票数量</th>
+				<th style="width: 10%;">儿童票数量</th>
+				<th style="width: 10%;">景区名称</th>
+				<th style="width: 10%;">景区位置</th>
+				<th style="width: 10%;">景区开放时间</th>
+
 			</tr>
-			
+
 			<%
-				db_conn conn=new db_conn();
-				String user_id=session.getAttribute("user_id").toString();
-				String sql="select * from scenic_order where user_id='"+user_id+"'";
-				ResultSet res=conn.executeQuery(sql);
-				while(res.next()){
-					String order_id = res.getString(1);//id
-					String user_name = res.getString(2);//用户名字
-					
-					String enter_time = res.getString(4);//入场时间
-					String phone = res.getString(5);//手机号
-					String children_num = res.getString(6);//儿童票数量
-					String ticket_num = res.getString(7);//成人票数量
-					String user_id_card = res.getString(8);//用户身份证
-					
+				TicketOrderModel model = new TicketOrderModel();
+				ScenicModel scenicModel = new ScenicModel();
+				List<TicketOrderVO> list = model.getAllTicketOrder();
+				for (TicketOrderVO vo : list) {
+
+					ScenicVO scenicVo = scenicModel.getScenic(vo.scenic_id);
 			%>
-			
+
 			<tr>
-				<td>
-					<%=res.getString(3) %> 
-				</td>
-				<td><p><%=res.getString(4) %></p></td>
-				<td><%=res.getString(5) %></td>
-				<td><%=res.getString(6) %></td>
-				<td><%=res.getString(7) %></td>
-				<td><%=res.getString(8) %></td>
-				<td><%=res.getString(9) %></td>
-				
+				<td><%=vo.user_name%></td>
+				<td><%=vo.phone%></td>
+				<td><%=vo.user_id_card%></td>
+				<td><%=vo.enter_time%></td>
+				<td><%=vo.adults_num%></td>
+				<td><%=vo.children_num%></td>
+				<td><%=scenicVo.scenic_name%></td>
+				<td><%=scenicVo.scenic_position%></td>
+				<td><%=scenicVo.open_time%></td>
+
 			</tr>
-			
+
 			<%
 				}
+				model.destroy();
+				scenicModel.destroy();
 			%>
 
 		</table>

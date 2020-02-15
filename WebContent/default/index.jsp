@@ -96,6 +96,8 @@
 
 				<%
 					}
+					// 销毁ScenicModel对象
+					model.destroy();
 				%>
 
 			</div>
