@@ -1,5 +1,6 @@
-<%@page import="javabean.db_conn"%>
-<%@page import="java.sql.ResultSet"%>
+
+<%@page import="vo.ScenicVO"%>
+<%@page import="model.ScenicModel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -7,32 +8,17 @@
 	//添加URL session ，作为用户登录后跳转回来的依据,登录servlet中已经写了判断程序，如果有url_cookie，就跳转到url_cookie，如果没有，就跳转到用户中心
 	session.setAttribute("url", request.getRequestURI());
 %>
-<%!String scenic_id = "";//id
-	String scenic_name = "";//景区名字
-	String open_time = "";//开放时间
-	String adults_price = "";//成人票价格
-	String children_price = "";//儿童票价格
-	String scenic_describe = "";//描述
-	String scenic_position = "";//景区位置%>
+
 <%
-	scenic_id = request.getParameter("scenic_id");
+	String scenic_id = request.getParameter("scenic_id");
 	if (scenic_id == null) {
 		scenic_id = "1";
 	}
-%>
-<%
-	db_conn conn = new db_conn();
-	String sql = "select * from scenic where id='" + scenic_id + "'";
-	ResultSet res = conn.executeQuery(sql);
-	if (res.next()) {
-		scenic_id = res.getString(1);//id
-		scenic_name = res.getString(2);//景区名字
-		open_time = res.getString(3);//开放时间
-		adults_price = res.getString(4);//成人票价格
-		children_price = res.getString(5);//儿童票价格
-		scenic_describe = res.getString(6);//描述
-		scenic_position = res.getString(7);//景区位置
-	}
+	//实例化ScenicModel对象
+	ScenicModel model = new ScenicModel();
+	//获取id为scenic_id的数据
+	ScenicVO vo = model.getScenic(scenic_id);
+	model.destroy();
 %>
 
 <%@ include file="verify_login.jsp"%>
@@ -103,15 +89,15 @@
 				<div style="margin-left: -15px;">
 					<h4 style="overflow: hidden; margin-left: 10px;">
 						<span style="display: block; float: left;"></span> <span
-							style="display: block; float: left; font-size: 36px; margin-left: 10px;"><%=scenic_name%></span>
+							style="display: block; float: left; font-size: 36px; margin-left: 10px;"><%=vo.scenic_name%></span>
 						<span
 							style="display: block; float: right; color: #999; font-size: 14px; margin-right: 5px;"></span>
 					</h4>
 				</div>
 				<div style="overflow: hidden; margin-top: 20px;">
 					<div class="flight-from" style="float: left;">
-						<span class="time text-center">开放时间：<%=open_time%></span><br /> <span
-							class="text-center">景区地址：<%=scenic_position%></span>
+						<span class="time text-center">开放时间：<%=vo.open_time%></span><br />
+						<span class="text-center">景区地址：<%=vo.scenic_position%></span>
 					</div>
 
 				</div>

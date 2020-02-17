@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import javabean.db_conn;
+import model.MessageModel;
 import model.ScenicModel;
 
 public class del_user_message extends HttpServlet {
@@ -24,15 +25,18 @@ public class del_user_message extends HttpServlet {
 			conn.executeDelete(sql);
 			resp.sendRedirect("admin/user_list.jsp");
 		}else if (sort.equals("message")) {
-			String id_str=req.getParameter("id");
-			int id=Integer.parseInt(id_str);
-			db_conn conn=new db_conn();
-			String sql="delete from user_message where id='"+id+"'";
-			conn.executeDelete(sql);
+			String id = req.getParameter("id");
+			// 实例化 ScenicModel对象
+			MessageModel model = new MessageModel();
+			// 删除目标数据
+			model.delmessage(id);
+			// 销毁ScenicModel对象
+			model.destroy();
+			// 跳转至 留言列表页面
 			resp.sendRedirect("admin/feedback_list.jsp");
 		}else if (sort.equals("scenic")) {
 			String id = req.getParameter("id");
-			// 实例化 ScenicModel实例化
+			// 实例化 ScenicModel对象
 			ScenicModel model = new ScenicModel();
 			// 删除目标数据
 			model.delScenic(id);

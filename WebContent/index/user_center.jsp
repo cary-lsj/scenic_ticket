@@ -29,7 +29,7 @@
 						<div class="ydc-user-info-func ydc-flex">
 							<span class="ydc-tag">
 								<% if(session.getAttribute("user_id").equals("admin")){
-										out.println("小糊涂仙");
+										out.println("admin");
 									}else{
 										out.println(session.getAttribute("user_id"));
 									}//不要问我为什么要这么操作，因为我是管理员^c^

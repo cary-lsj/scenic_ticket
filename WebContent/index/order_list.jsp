@@ -3,8 +3,6 @@
 <%@page import="java.util.List"%>
 <%@page import="vo.TicketOrderVO"%>
 <%@page import="vo.ScenicVO"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="javabean.db_conn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 

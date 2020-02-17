@@ -4,8 +4,6 @@
 <%@page import="java.util.List"%>
 <%@page import="vo.TicketOrderVO"%>
 <%@page import="model.TicketOrderModel"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="javabean.db_conn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 

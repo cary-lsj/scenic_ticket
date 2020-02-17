@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 import javabean.db_conn;//导入连接数据库类
 import javabean.get_md5;//导入MD5哈希函数类（此类为自己写的，不是类库中的类）
 
@@ -19,6 +18,7 @@ public class check_login_reg extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 		resp.setContentType("text/html;charset=utf-8");
@@ -27,6 +27,7 @@ public class check_login_reg extends HttpServlet {
 		resp.setHeader("refresh", "2;url=index/login_reg.jsp");
 	}
 	
+	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 		String log_name = req.getParameter("log_name");
@@ -51,17 +52,7 @@ public class check_login_reg extends HttpServlet {
 			
 			resp.setContentType("text/html;charset=utf-8");
 			PrintWriter out = resp.getWriter();
-			out.println("请不要尝试非法操作");
-			/*****测试数据
-			out.println("登录账号："+log_name+"\n登录密码："+log_pwd+"\n注册账号："
-			+reg_name+"\n注册密码1："+reg_pwd1+"\n注册密码2："+reg_pwd2);
-			out.print("---log_name==null:"+(log_name==null));
-			out.print("---log_pwd==null:"+(log_pwd==null));
-			out.print("---reg_name==null:"+(reg_name==null));
-			out.print("---reg_pwd1==null:"+(reg_pwd1==null));
-			out.print("---reg_pwd2==null:"+(reg_pwd2==null));
-			*/
-					
+
 			resp.setHeader("refresh", "2;url=index/login_reg.jsp");
 			//除了登录和注册操作，提交其它数据均为非法操作，不做处理，仅给出提示非法信息
 		}

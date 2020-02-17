@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-02-12 20:58:59
+Date: 2020-02-17 15:29:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -48,29 +48,24 @@ INSERT INTO `common_user` VALUES ('admin', '9C70EA7F3264F3E7284853BE80DD3865', '
 INSERT INTO `common_user` VALUES ('test', 'F59BD65F7EDAFB087A81D4DCA06C4910', null);
 
 -- ----------------------------
--- Table structure for flight
+-- Table structure for message
 -- ----------------------------
-DROP TABLE IF EXISTS `flight`;
-CREATE TABLE `flight` (
-  `f_n` varchar(6) NOT NULL COMMENT '航班号',
-  `f_s_p` varchar(4) NOT NULL COMMENT '航班起点',
-  `f_e_p` varchar(4) NOT NULL COMMENT '航班终点',
-  `f_s_a` varchar(12) NOT NULL COMMENT '航班起飞机场',
-  `f_a_a` varchar(12) NOT NULL COMMENT '航班到达机场',
-  `f_d_t` varchar(5) NOT NULL COMMENT '起飞(departure)时间',
-  `f_a_t` varchar(5) NOT NULL COMMENT '到达时间',
-  `f_f_c_p` int(11) NOT NULL COMMENT '头等舱价格First class price',
-  `f_s_c_p` int(11) NOT NULL COMMENT '商务舱价格',
-  `f_t_c_p` int(11) NOT NULL COMMENT '经济舱价格',
-  PRIMARY KEY (`f_n`),
-  UNIQUE KEY `f_n` (`f_n`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='航班信息';
+DROP TABLE IF EXISTS `message`;
+CREATE TABLE `message` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(255) DEFAULT NULL COMMENT '用户Id',
+  `content` varchar(255) DEFAULT NULL COMMENT '留言内容',
+  `message_date` datetime DEFAULT NULL COMMENT '留言时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of flight
+-- Records of message
 -- ----------------------------
-INSERT INTO `flight` VALUES ('SU2312', '北京', '郑州', '大兴机场', '新郑机场', '07:30', '12:00', '2100', '1500', '800');
-INSERT INTO `flight` VALUES ('CA3060', '北京', '上海', '首都机场', '虹桥机场', '08:30', '12:30', '2100', '1600', '1200');
+INSERT INTO `message` VALUES ('1', 'test', '上海迪士尼乐园太好玩了！！！', '2020-02-17 00:00:00');
+INSERT INTO `message` VALUES ('4', 'test', '上海迪士尼乐园太好玩了！！！', '2020-02-17 15:14:42');
+INSERT INTO `message` VALUES ('3', 'test', '上海迪士尼乐园太好玩了！！！', '2020-02-17 00:00:00');
+INSERT INTO `message` VALUES ('5', 'test', '上海迪士尼乐园太好玩了！！！', '2020-02-17 15:19:01');
 
 -- ----------------------------
 -- Table structure for scenic
@@ -79,38 +74,43 @@ DROP TABLE IF EXISTS `scenic`;
 CREATE TABLE `scenic` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `scenic_name` varchar(255) DEFAULT '' COMMENT '景区名字',
-  `open_time` varchar(255) DEFAULT '' COMMENT '开放时间',
-  `price_adults` float(11,0) unsigned zerofill DEFAULT '00000000000' COMMENT '价格',
-  `price_children` float(11,0) DEFAULT '0' COMMENT '儿童价格',
-  `scenic_describe` varchar(255) DEFAULT '' COMMENT '描述',
-  `scenic_position` varchar(255) DEFAULT '' COMMENT '地理位置',
+  `open_time` varchar(255) DEFAULT '' COMMENT '景区开放时间',
+  `price_adults` float(11,0) unsigned zerofill DEFAULT '00000000000' COMMENT '成人票价格',
+  `price_children` float(11,0) DEFAULT '0' COMMENT '儿童票价格',
+  `scenic_describe` varchar(255) DEFAULT '' COMMENT '景区描述',
+  `scenic_position` varchar(255) DEFAULT '' COMMENT '景区地理位置',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of scenic
 -- ----------------------------
 INSERT INTO `scenic` VALUES ('1', '上海迪士尼乐园', '8:00至22:00', '00000000500', '300', '一座神奇王国经典迪士尼乐园', '上海市浦东新区申迪北路753号');
 INSERT INTO `scenic` VALUES ('7', '郑州方特梦幻王国', '全天', '00000000200', '120', '方特梦幻王国是以中国神话为背景的文化科技主题乐园', ' 河南省郑州市中牟县郑开大道与人文路交叉口');
+INSERT INTO `scenic` VALUES ('8', ' 北京富国海底世界', '8:00-18:00(旺季)  8:30-17:30(淡季) ', '00000000100', '60', '寓教于乐的海底主题乐园,炫酷的极光世界，震撼您的感官视听,异域风情的俄罗斯美人鱼和水下芭蕾表演,120米的超长海底隧道', '北京市朝阳区三里屯工体北路工体南门');
 
 -- ----------------------------
--- Table structure for scenic_order
+-- Table structure for ticket_order
 -- ----------------------------
-DROP TABLE IF EXISTS `scenic_order`;
-CREATE TABLE `scenic_order` (
+DROP TABLE IF EXISTS `ticket_order`;
+CREATE TABLE `ticket_order` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_name` varchar(255) DEFAULT NULL COMMENT '联系人名字',
-  `user_id` varchar(11) DEFAULT NULL COMMENT '联系人身份证',
+  `user_id` varchar(11) DEFAULT NULL COMMENT '用户id',
   `enter_time` datetime DEFAULT NULL COMMENT '入场时间',
   `phone` varchar(255) DEFAULT NULL COMMENT '手机号',
   `children_num` int(11) DEFAULT NULL,
-  `ticket_num` int(11) DEFAULT NULL,
+  `adults_num` int(11) DEFAULT NULL,
   `user_id_card` varchar(255) DEFAULT NULL,
   `scenic_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of scenic_order
+-- Records of ticket_order
 -- ----------------------------
-INSERT INTO `scenic_order` VALUES ('1', '张三', 'test', '2020-02-12 00:00:00', '13659632541', '1', '1', '410728199606121436', null);
+INSERT INTO `ticket_order` VALUES ('1', '张三', 'test', '2020-02-12 00:00:00', '13659632541', '1', '1', '410728199606121436', '1');
+INSERT INTO `ticket_order` VALUES ('2', '李四', 'test', '2020-02-29 00:00:00', '15538612536', '0', '1', '410728199707171214', '8');
+INSERT INTO `ticket_order` VALUES ('3', '李四', 'test', '2020-02-15 00:00:00', '15538612536', '3', '2', '410728199707171214', '1');
+INSERT INTO `ticket_order` VALUES ('4', '赵武', 'test', '2020-02-15 00:00:00', '15538612536', '3', '2', '410728199832171214', '1');
+INSERT INTO `ticket_order` VALUES ('5', '赵六', 'test', '2020-02-15 00:00:00', '15538612536', '2', '2', '410728199832171214', '1');

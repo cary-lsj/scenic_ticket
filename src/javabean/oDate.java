@@ -1,16 +1,15 @@
 package javabean;
 
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class oDate {
 	public String get_date() {
-		String date=null;
-		Calendar cal=Calendar.getInstance(); 
-		int y=cal.get(Calendar.YEAR);
-		int m=cal.get(Calendar.MONTH)+1; 
-		int d=cal.get(Calendar.DATE);
-		date=y+"-"+m+"-"+d;
-		return date;
+		Date date = new Date(); // this object contains the current date value
+
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String res = formatter.format(date);
+		return res;
 	}
 	 
 }
