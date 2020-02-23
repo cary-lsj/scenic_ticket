@@ -90,7 +90,18 @@
   <servlet-mapping>
     <servlet-name>servlet_scenic_add</servlet-name>
     <url-pattern>/url_scenic_add</url-pattern>
+    
   </servlet-mapping>
+    <servlet>
+    <servlet-name>servlet_return_ticket</servlet-name>
+    <servlet-class>servlet.return_ticket</servlet-class>
+    <load-on-startup>5</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>servlet_return_ticket</servlet-name>
+    <url-pattern>/url_return_ticket</url-pattern>
+  </servlet-mapping>
+  
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>

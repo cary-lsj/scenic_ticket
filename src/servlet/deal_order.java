@@ -45,10 +45,12 @@ public class deal_order extends HttpServlet{
 					resp.sendRedirect("default/order_list.jsp");
 				}
 			} else {
+				resp.setContentType("text/html;charset=utf-8");
 				PrintWriter out = resp.getWriter();
 				out.println("请填写完整的信息");
+				resp.setHeader("refresh", "2;url=default/order.jsp");
 			}
-		}	
-		
+		}
+
 	}
 }

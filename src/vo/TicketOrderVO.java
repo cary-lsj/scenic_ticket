@@ -45,6 +45,49 @@ public class TicketOrderVO extends VOBase {
 	 * 景区id
 	 */
 	public String scenic_id;
+	/**
+	 * 当前状态：0正常状态，1申请退票，2：已退票
+	 */
+	public String state;
+
+	public boolean isNormal() {
+		return state.equals("0");
+	}
+
+	public boolean isApplyReturnTicket() {
+		return state.equals("1");
+	}
+
+	public boolean isReturnTicket() {
+		return state.equals("2");
+	}
+
+	public String getState() {
+		String res = "";
+		switch (state) {
+		case "0":
+			res = "正常";
+			break;
+		case "1":
+			res = "申请退票";
+			break;
+		case "2":
+			res = "已退票";
+			break;
+		default:
+			res = "正常";
+			break;
+		}
+		return res;
+	}
+
+	public void applyReturnTicket() {
+		state = "1";
+	}
+
+	public void agreeReturnTicket() {
+		state = "2";
+	}
 
 	@Override
 	public void update(ResultSet res) {
@@ -60,6 +103,7 @@ public class TicketOrderVO extends VOBase {
 			adults_num = res.getString(7);
 			user_id_card = res.getString(8);
 			scenic_id = res.getString(9);
+			state = res.getString(10);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
