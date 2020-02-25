@@ -25,14 +25,14 @@
 			
 			
 			<tr>
-				<th style="width: 10%;">联系人</th>
+				<th style="width: 5%;">联系人</th>
 				<th style="width: 10%;">联系电话</th>
 				<th style="width: 10%;">联系人身份证</th>
-				<th style="width: 10%;">入场时间</th>
-				<th style="width: 10%;">成人票数量</th>
-				<th style="width: 10%;">儿童票数量</th>
+				<th style="width: 8%;">入场时间</th>
+				<th style="width: 5%;">成人票/张</th>
+				<th style="width: 5%;">儿童票/张</th>
 				<th style="width: 10%;">景区名称</th>
-				<th style="width: 10%;">景区位置</th>
+				<th style="width: 12%;">景区位置</th>
 				<th style="width: 10%;">景区开放时间</th>
 				<th style="width: 5%;">状态</th>
 				<th style="width: 5%;">操作</th>

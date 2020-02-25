@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-02-17 15:29:13
+Date: 2020-02-25 18:17:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -44,8 +44,9 @@ CREATE TABLE `common_user` (
 -- ----------------------------
 -- Records of common_user
 -- ----------------------------
-INSERT INTO `common_user` VALUES ('admin', '9C70EA7F3264F3E7284853BE80DD3865', '9c77f9e7-6334-49df-a444-149e7bd49f81.png');
+INSERT INTO `common_user` VALUES ('admin', '74D839D98630E280DF752E8939454A6B', null);
 INSERT INTO `common_user` VALUES ('test', 'F59BD65F7EDAFB087A81D4DCA06C4910', null);
+INSERT INTO `common_user` VALUES ('234', '09CDFD1BEF3267491FD39E61CFF9FEEE', null);
 
 -- ----------------------------
 -- Table structure for message
@@ -103,14 +104,22 @@ CREATE TABLE `ticket_order` (
   `adults_num` int(11) DEFAULT NULL,
   `user_id_card` varchar(255) DEFAULT NULL,
   `scenic_id` int(11) DEFAULT NULL,
+  `state` varchar(255) DEFAULT '0' COMMENT '当前状态：0正常状态，1申请退票，2：已退票，3:已过期',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ticket_order
 -- ----------------------------
-INSERT INTO `ticket_order` VALUES ('1', '张三', 'test', '2020-02-12 00:00:00', '13659632541', '1', '1', '410728199606121436', '1');
-INSERT INTO `ticket_order` VALUES ('2', '李四', 'test', '2020-02-29 00:00:00', '15538612536', '0', '1', '410728199707171214', '8');
-INSERT INTO `ticket_order` VALUES ('3', '李四', 'test', '2020-02-15 00:00:00', '15538612536', '3', '2', '410728199707171214', '1');
-INSERT INTO `ticket_order` VALUES ('4', '赵武', 'test', '2020-02-15 00:00:00', '15538612536', '3', '2', '410728199832171214', '1');
-INSERT INTO `ticket_order` VALUES ('5', '赵六', 'test', '2020-02-15 00:00:00', '15538612536', '2', '2', '410728199832171214', '1');
+INSERT INTO `ticket_order` VALUES ('1', '张三', 'test', '2020-02-12 00:00:00', '13659632541', '1', '1', '410728199606121436', '1', '2');
+INSERT INTO `ticket_order` VALUES ('2', '李四', 'test', '2020-02-29 00:00:00', '15538612536', '0', '1', '410728199707171214', '8', '2');
+INSERT INTO `ticket_order` VALUES ('3', '李四', 'test', '2020-02-15 00:00:00', '15538612536', '3', '2', '410728199707171214', '1', '2');
+INSERT INTO `ticket_order` VALUES ('4', '赵武', 'test', '2020-02-15 00:00:00', '15538612536', '3', '2', '410728199832171214', '1', '3');
+INSERT INTO `ticket_order` VALUES ('5', '赵六', 'test', '2020-02-15 00:00:00', '15538612536', '2', '2', '410728199832171214', '1', '3');
+INSERT INTO `ticket_order` VALUES ('7', '小明', 'admin', '2020-02-22 00:00:00', '16657389764', '0', '1', '410728199832171214', '1', '2');
+INSERT INTO `ticket_order` VALUES ('10', '赵武', 'admin', '2020-02-29 00:00:00', '15538612536', '2', '1', '410728199707171214', '7', '2');
+INSERT INTO `ticket_order` VALUES ('11', '小红', 'admin', '2020-02-29 00:00:00', '15538612536', '2', '1', '410728199707171214', '7', '2');
+INSERT INTO `ticket_order` VALUES ('12', '李四', 'test', '2020-02-25 00:00:00', '15538612536', '2', '12', '410728199707171214', '1', '0');
+INSERT INTO `ticket_order` VALUES ('13', '李四', 'test', '2020-02-26 00:00:00', '15538612536', '1', '2', '410728199707171214', '8', '2');
+INSERT INTO `ticket_order` VALUES ('14', '李四', 'test', '2020-02-25 00:00:00', '15538612536', '3', '3', '410728199707171214', '1', '0');
+INSERT INTO `ticket_order` VALUES ('15', '小明', 'test', '2020-02-26 00:00:00', '15538612536', '2', '2', '410728199707171214', '7', '0');

@@ -113,7 +113,7 @@
 
 .ydc-content-slide {
     position: relative;
-    width: 1180px;
+    width: 90%;
     margin: 20px auto;
     -webkit-transform: translate3d(0,30px,0);
     transform: translate3d(0,30px,0);
@@ -130,7 +130,7 @@
     -ms-flex: 0 0 20.83333%;
     -webkit-flex: 0 0 20.83333%;
     flex: 0 0 20.83333%;
-    max-width: 20.83333%
+    max-width: 300px;
 }
 
 .ydc-menu {
