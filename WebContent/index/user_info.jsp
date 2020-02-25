@@ -24,7 +24,7 @@
 					<div class="ydc-tabPanel ydc-tabPanel-release">
 						<div class="ydc-release-tab-head">
 							<ul>
-								<li class="hit">帐号设置</li>
+								<li class="hit">个人资料</li>
 							</ul>
 						</div>
 						<div class="ydc-panes">

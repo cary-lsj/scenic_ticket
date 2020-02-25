@@ -3,6 +3,7 @@ package model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import vo.TicketOrderVO;
@@ -18,7 +19,7 @@ public class TicketOrderModel extends ModelBase {
 	 */
 	public List<TicketOrderVO> getAllTicketOrder() {
 		// 组织sql语句 查询ticket_order订单表
-		String sql = "select * from ticket_order";
+		String sql = "select * from ticket_order order by enter_time desc";
 		// 执行sql语句
 		ResultSet res = conn.executeQuery(sql);
 
@@ -28,9 +29,7 @@ public class TicketOrderModel extends ModelBase {
 			// 读取下一条数据 直到读取到最后一条
 			while (res.next()) {
 				// 构造TicketOrderVO订单数据包
-				TicketOrderVO vo = new TicketOrderVO();
-				// 将res数据添加到TicketOrderVO订单数据包中
-				vo.update(res);
+				TicketOrderVO vo = getTicketOrderVO(res);
 				// 将数据包添加到list订单列表中
 				list.add(vo);
 			}
@@ -47,7 +46,7 @@ public class TicketOrderModel extends ModelBase {
 	 */
 	public List<TicketOrderVO> getAllTicketOrderByUserid(String id) {
 		// 组织sql语句 查询ticket_order订单表
-		String sql = "select * from ticket_order where user_id='" + id + "'";
+		String sql = "select * from ticket_order where user_id='" + id + "' order by enter_time desc";
 		// 执行sql语句
 		ResultSet res = conn.executeQuery(sql);
 
@@ -57,9 +56,7 @@ public class TicketOrderModel extends ModelBase {
 			// 读取下一条数据 直到读取到最后一条
 			while (res.next()) {
 				// 构造TicketOrderVO订单数据包
-				TicketOrderVO vo = new TicketOrderVO();
-				// 将res数据添加到TicketOrderVO订单数据包中
-				vo.update(res);
+				TicketOrderVO vo = getTicketOrderVO(res);
 				// 将数据包添加到list订单列表中
 				list.add(vo);
 			}
@@ -82,9 +79,7 @@ public class TicketOrderModel extends ModelBase {
 		try {
 			if (res.next()) {
 				// 构造TicketOrderVO订单数据包
-				TicketOrderVO vo = new TicketOrderVO();
-				// 将res数据添加到TicketOrderVO订单数据包中
-				vo.update(res);
+				TicketOrderVO vo = getTicketOrderVO(res);
 				// 返回TicketOrderVO订单数据包
 				return vo;
 			}
@@ -107,9 +102,7 @@ public class TicketOrderModel extends ModelBase {
 		try {
 			if (res.next()) {
 				// 构造TicketOrderVO订单数据包
-				TicketOrderVO vo = new TicketOrderVO();
-				// 将res数据添加到TicketOrderVO订单数据包中
-				vo.update(res);
+				TicketOrderVO vo = getTicketOrderVO(res);
 				// 返回TicketOrderVO订单数据包
 				return vo;
 			}
@@ -119,6 +112,43 @@ public class TicketOrderModel extends ModelBase {
 		}
 		// 失败时返回null空数据
 		return null;
+	}
+
+	/**
+	 * 检查票是否过期
+	 */
+	private TicketOrderVO getTicketOrderVO(ResultSet res) {
+		// 构造TicketOrderVO订单数据包
+		TicketOrderVO vo = new TicketOrderVO();
+		// 将res数据添加到TicketOrderVO订单数据包中
+		vo.update(res);
+		// 检查票是否过期
+		checkTicketTime(vo);
+		// 返回TicketOrderVO订单数据包
+		return vo;
+	}
+
+	/**
+	 * 检查票是否过期
+	 */
+	private void checkTicketTime(TicketOrderVO vo) {
+		if (vo.isNormal()) {
+			// 票状态为正常才进行检查
+			// 获取当前时间
+			Date curDate = new Date();
+			// 获取入场时间
+			Date enterTime = vo.getDate();
+			// 计算差值 单位毫秒
+			long time = curDate.getTime() - enterTime.getTime();
+			// 一天有多少毫秒
+			long day = 24 * 60 * 60 * 1000;
+
+			if (time > day) {
+				// 过期的票 离入场已经超过24小时
+				vo.expiredTicket();
+				updateTicketOrder(vo);
+			}
+		}
 	}
 
 	/**

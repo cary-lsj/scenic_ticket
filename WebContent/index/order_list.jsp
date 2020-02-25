@@ -19,6 +19,7 @@
 
 	<div class="container bg-gray-eee box-shadow mar-bottom-30"
 		style="width: 95%; padding-right: 0px; padding-left: 0px; position: relative; margin-top: 120px;">
+
 		<table border="0" cellspacing="0" cellpadding="0"
 			class="table table-hover table-striped font12 table-bordered v-align-top">
 			

@@ -16,6 +16,9 @@
 	href="/scenic_ticket/index/css/icon.css">
 <link type="text/css" rel="stylesheet"
 	href="/scenic_ticket/index/css/home.css">
+
+<script src="index/js/jquery.min.js"></script>
+<script src="index/js/jquery.pure.tooltips.js"></script>
 </head>
 <body>
 
@@ -60,18 +63,18 @@
 								<i class="ydc-icon ydc-icon-home fl"></i>首页
 						</span>
 							<ul>
-								<li><a target="frame"
-									href="/scenic_ticket/index/user_info.jsp" class="active">个人资料</a></li>
-								<li><a target="frame"
-									href="/scenic_ticket/index/edit_info.jsp">修改信息</a></li>
+								<li><a id="user_info"
+									href="/scenic_ticket/user_center?type=user_info">个人资料</a></li>
+								<li><a id="edit_info"
+									href="/scenic_ticket/user_center?type=edit_info" href="#">修改信息</a></li>
 							</ul></li>
 
 						<li class="ydc-menu-item"><span class="ydc-menu-sub-title">
 								<i class="ydc-icon ydc-icon-record fl"></i>订单
 						</span>
 							<ul>
-								<li><a target="frame"
-									href="/scenic_ticket/index/order_list.jsp">订单列表</a></li>
+								<li><a id="order_list"
+									href="/scenic_ticket/user_center?type=order_list">订单列表</a></li>
 							</ul></li>
 
 						<li class="ydc-menu-item"><span class="ydc-menu-sub-title">
@@ -87,12 +90,54 @@
 
 			<!-- right start -->
 			<div style="width: 76%; height: 100%;">
-				<iframe name="frame" scrolling="auto" width="100%" height="100%"
-					frameborder="0" src="/scenic_ticket/index/user_info.jsp"></iframe>
+				<iframe id="iframe_content" scrolling="auto" width="100%"
+					height="100%" frameborder="0"></iframe>
 			</div>
 			<!-- right end -->
 		</div>
 	</div>
 
 </body>
+<script>
+	function select(type) {
+		
+		//移除所有选中
+		$("li").removeClass("active");
+
+		switch (type) {
+		case "user_info":
+			//给选中项添加选中样式
+			$("#user_info").addClass("active");
+			//设置内容地址
+			iframe_content.src = "/scenic_ticket/index/user_info.jsp";
+			break;
+		case "edit_info":
+			 $("#edit_info").addClass("active");
+			iframe_content.src = "/scenic_ticket/index/edit_info.jsp";
+			break;
+		case "order_list":
+			$("#order_list").addClass("active");
+			iframe_content.src = "/scenic_ticket/index/order_list.jsp";
+			break;
+		default:
+			$("#user_info").addClass("active");
+			iframe_content.src = "/scenic_ticket/index/user_info.jsp";
+			break;
+		}
+	};
+
+	//获取地址栏数据
+	function getUrlParam(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+		var r = window.location.search.substr(1).match(reg); //匹配目标参数
+		if (r != null)
+			return unescape(r[2]);
+		return null; //返回参数值
+	}
+
+	//获取地址栏中type的值
+	var type = getUrlParam('type');
+	//选中目标
+	select(type);
+</script>
 </html>
