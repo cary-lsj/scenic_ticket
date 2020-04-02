@@ -25,8 +25,8 @@ public class db_conn {
 		String PWD = "root";
 		
 		try{
-			// 返回com.mysql.cj.jdbc.Driver对象。
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			// 返回com.mysql.jdbc.Driver对象。
+			Class.forName("com.mysql.jdbc.Driver");
 		}catch(ClassNotFoundException e){
 			System.out.println(e);
 		}try{
