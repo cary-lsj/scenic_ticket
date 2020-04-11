@@ -41,7 +41,7 @@
 
 	<!-- content start -->
 
-	<form action="../add_order" method="post">
+	<form action="../edit_info" method="post">
 		<input type="hidden" name="scenic_id" value="<%=scenic_id%>">
 		<div class="container bg-gray-eee box-shadow mar-bottom-30"
 			style="padding-right: 0px; padding-left: 0px; position: relative; margin-top: 120px;">

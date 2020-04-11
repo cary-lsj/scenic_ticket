@@ -109,7 +109,7 @@
 			//给选中项添加选中样式
 			$("#user_info").addClass("active");
 			//设置内容地址
-			iframe_content.src = "/scenic_ticket/index/user_info.jsp";
+			iframe_content.src = "/scenic_ticket/index/edit_info.jsp";
 			break;
 		case "edit_info":
 			 $("#edit_info").addClass("active");

@@ -24,6 +24,9 @@
 <body class="bg-body">
 
 	<%@ include file="header.jsp"%>
+<%
+	String scenic_name = request.getParameter("scenic_name");
+%>
 
 	<!-- 搜索 -->
 	<div class="index-wall white " style="">
@@ -33,7 +36,7 @@
 
 				<div class="form-group">
 					<input name="scenic_name" type="text" class="form-control"
-						style="width: 400px;" id="" value="" placeholder="景区名称">
+						style="width: 400px;" id="" value="<%=scenic_name%>" placeholder="景区名称">
 				</div>
 				<button type="submit" class="btn btn-warning mar-left-10">搜索</button>
 			</form>
@@ -46,8 +49,15 @@
 		<div class="hangbanlist">
 			<div>
 				<%
+				
 					ScenicModel model = new ScenicModel();
-					List<ScenicVO> list = model.getAllScenic();
+					List<ScenicVO> list;
+					if(scenic_name==null){
+						list = model.getAllScenic();
+					}else{
+						list = model.getScenicByName(scenic_name);
+					}
+					
 
 					for (int i = 0; i < list.size(); i++) {
 						ScenicVO vo = (ScenicVO) list.get(i);

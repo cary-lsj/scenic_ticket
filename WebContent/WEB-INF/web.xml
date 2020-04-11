@@ -57,7 +57,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>nav_search</servlet-name>
-    <servlet-class>servlet.search_fly</servlet-class>
+    <servlet-class>servlet.search</servlet-class>
     <load-on-startup>5</load-on-startup>
   </servlet>
   <servlet-mapping>
@@ -90,8 +90,8 @@
   <servlet-mapping>
     <servlet-name>servlet_scenic_add</servlet-name>
     <url-pattern>/url_scenic_add</url-pattern>
-    
   </servlet-mapping>
+  
     <servlet>
     <servlet-name>servlet_return_ticket</servlet-name>
     <servlet-class>servlet.return_ticket</servlet-class>
@@ -100,6 +100,16 @@
   <servlet-mapping>
     <servlet-name>servlet_return_ticket</servlet-name>
     <url-pattern>/url_return_ticket</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>servlet_edit_info</servlet-name>
+    <servlet-class>servlet.edit_info</servlet-class>
+    <load-on-startup>5</load-on-startup>
+  	</servlet>
+  <servlet-mapping>
+    <servlet-name>servlet_edit_info</servlet-name>
+    <url-pattern>/edit_info</url-pattern>
   </servlet-mapping>
   
   <welcome-file-list>
