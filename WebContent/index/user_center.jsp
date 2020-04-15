@@ -121,7 +121,7 @@
 			break;
 		default:
 			$("#user_info").addClass("active");
-			iframe_content.src = "/scenic_ticket/index/user_info.jsp";
+			iframe_content.src = "/scenic_ticket/index/edit_info.jsp";
 			break;
 		}
 	};
